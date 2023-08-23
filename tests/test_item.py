@@ -3,11 +3,6 @@ import pytest
 from src.item import Item
 
 
-@pytest.fixture
-def item() -> Item:
-    return Item("Смартфон", 1000, 2)
-
-
 def test_item_initialized(item) -> None:
     assert item.name == "Смартфон"
     assert item.price == 1000
@@ -62,3 +57,15 @@ def test_repr(item):
 
 def test_str(item):
     assert str(item) == "Смартфон"
+
+
+def test_add_items(item, phone):
+    assert item + phone == 7
+    assert phone + phone == 10
+
+
+def test_add_items_error(item, phone):
+    with pytest.raises(TypeError):
+        item + 'phone'
+    with pytest.raises(TypeError):
+        phone + 1

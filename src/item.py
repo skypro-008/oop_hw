@@ -21,6 +21,13 @@ class Item:
             raise Exception('Длина товара превышает 10 символов.')
         self.__name = value
 
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        else:
+            raise TypeError(
+                f"Unsupported operand type(s) for +: '{self.__class__.__name__}' and '{other.__class__.__name__}'")
+
     @classmethod
     def from_csv(cls, filename):
         with open(filename) as fp:
@@ -54,19 +61,3 @@ class Item:
 
     def __str__(self):
         return f"{self.__name}"
-
-
-if __name__ == '__main__':
-    item1 = Item("Смартфон", 10000, 20)
-    item2 = Item("Ноутбук", 20000, 5)
-    item1
-    print(item1)
-    # print(item1.calculate_total_price())
-    # print(item2.calculate_total_price())
-    #
-    # Item.pay_rate = 0.8
-    # item1.apply_discount()
-    # print(item1.price)
-    # print(item2.price)
-    #
-    # print(Item.all)
