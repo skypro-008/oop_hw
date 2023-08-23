@@ -54,3 +54,11 @@ def test_is_integer():
     assert Item.is_integer(10.0) is True
     assert Item.is_integer('10') is False
     assert Item.is_integer(None) is False
+
+
+def test_repr(item):
+    assert repr(item) == "Item('Смартфон', 1000, 2)"
+
+
+def test_str(item):
+    assert str(item) == "Смартфон"

@@ -49,19 +49,18 @@ class Item:
     def apply_discount(self):
         self.price = self.price * self.pay_rate
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f"{self.__name}"
+
 
 if __name__ == '__main__':
-    Item.from_csv('items.csv')  # создание объектов из данных файла
-    print(len(Item.all))  # в файле 5 записей с данными по товарам
-    item1 = Item.all[0]
-    print(item1.name)
-    print(item1.price)
-    print(item1.quantity)
-
-
-    # item1 = Item("Смартфон", 10000, 20)
-    # item2 = Item("Ноутбук", 20000, 5)
-    #
+    item1 = Item("Смартфон", 10000, 20)
+    item2 = Item("Ноутбук", 20000, 5)
+    item1
+    print(item1)
     # print(item1.calculate_total_price())
     # print(item2.calculate_total_price())
     #
