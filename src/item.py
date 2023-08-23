@@ -29,7 +29,7 @@ class Item:
                 f"Unsupported operand type(s) for +: '{self.__class__.__name__}' and '{other.__class__.__name__}'")
 
     @classmethod
-    def from_csv(cls, filename):
+    def instantiate_from_csv(cls, filename):
         with open(filename) as fp:
             items = csv.DictReader(fp)
             for item in items:
