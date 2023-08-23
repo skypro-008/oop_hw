@@ -22,7 +22,7 @@ class Item:
         self.__name = value
 
     @classmethod
-    def from_csv(cls, filename):
+    def instantiate_from_csv(cls, filename):
         with open(filename) as fp:
             items = csv.DictReader(fp)
             for item in items:
