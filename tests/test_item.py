@@ -1,6 +1,6 @@
 import pytest
 
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 
 
 def test_item_initialized(item) -> None:
@@ -32,7 +32,7 @@ def test_name_too_long_len(item):
 
 def test_from_csv():
     Item.all.clear()
-    Item.from_csv('tests/test_data/items.csv')
+    Item.instantiate_from_csv('tests/test_data/items.csv')
     assert len(Item.all) == 2
 
     assert Item.all[0].name == 'Товар 1'
@@ -42,6 +42,18 @@ def test_from_csv():
     assert Item.all[1].name == 'Товар 2'
     assert Item.all[1].price == 20
     assert Item.all[1].quantity == 15
+
+
+def test_instantiate_from_csv_file_not_found():
+    with pytest.raises(FileNotFoundError):
+        Item.all = []
+        Item.instantiate_from_csv('tests/test_data/nonexistent_items.csv')
+
+
+def test_instantiate_from_csv_file_corrupted():
+    with pytest.raises(InstantiateCSVError):
+        Item.all = []
+        Item.instantiate_from_csv('tests/test_data/corrupted_items.csv')
 
 
 def test_is_integer():

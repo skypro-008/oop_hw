@@ -1,5 +1,7 @@
 import csv
 
+from src.custom_exceptions import InstantiateCSVError
+
 
 class Item:
     pay_rate = 1
@@ -30,16 +32,22 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, filename):
-        with open(filename) as fp:
-            items = csv.DictReader(fp)
-            for item in items:
-                name = item['name']
-                price = float(item['price'])
-                if cls.is_integer(price):
-                    price = int(price)
+        try:
+            with open(filename) as fp:
+                items = csv.DictReader(fp)
+                for item in items:
+                    try:
+                        name = item['name']
+                        price = float(item['price'])
+                        if cls.is_integer(price):
+                            price = int(price)
 
-                quantity = int(item['quantity'])
-                cls(name, price, quantity)
+                        quantity = int(item['quantity'])
+                        cls(name, price, quantity)
+                    except KeyError:
+                        raise InstantiateCSVError("Файл item.csv поврежден")
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
 
     @staticmethod
     def is_integer(num) -> bool:
